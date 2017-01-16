@@ -37,6 +37,8 @@ The other file, `deploy_key.pub`, is what you add to your github repo as [Deploy
 ## Pushing to Private Docker Repositories
 Use the environment variables `DOCKER_USER` and `DOCKER_PASS`.
 
+`DOCKER_ENDPOINT` is also available to specify a custom registry.
+
 ## Example
 
 ```

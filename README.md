@@ -1,4 +1,6 @@
 # git-builder
+[![Build Status](https://travis-ci.org/bithavoc/git-builder.svg?branch=master)](https://travis-ci.org/bithavoc/git-builder)
+
 Builds docker images from Git repositories
 
 > `git clone`, `docker build`, `docker push`... repeat :musical_note:
@@ -32,7 +34,7 @@ Then you add the content of the file `deploy_key.key.base64` in the `SSH_KEY` en
 
 The other file, `deploy_key.pub`, is what you add to your github repo as [Deploy Key](https://developer.github.com/guides/managing-deploy-keys/)
 
-**Note::** passphrase are not supported
+**Note:** passphrases are not supported in deploy keys
 
 ## Pushing to Private Docker Repositories
 Use the environment variables `DOCKER_USER` and `DOCKER_PASS`.

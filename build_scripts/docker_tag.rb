@@ -8,7 +8,7 @@ class DockerTag
 
   def build!(from:)
     install_credentials!
-    abort('Failed to build image') unless system("docker build -t #{name} #{from}")
+    abort('Failed to build image') unless system("docker build --force-rm -t #{name} #{from}")
   end
 
   def push!

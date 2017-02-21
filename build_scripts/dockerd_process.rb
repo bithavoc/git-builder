@@ -14,7 +14,7 @@ class DockerdProcess
   private
 
   def boot_dockerd
-    success, output = IO.popen(['dockerd', '--insecure-registry', 'myregistrydomain.com:5000', err: [:child, :out]]) do |io|
+    success, output = IO.popen(['dockerd', '--insecure-registry', 'myregistrydomain.com:5000', '--experimental', err: [:child, :out]]) do |io|
       output = io.read
       io.close
       [$?.success?, output]

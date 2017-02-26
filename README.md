@@ -9,6 +9,7 @@ Builds docker images from Git repositories
 Use the following environment variables to control the building process
 
 **GIT_REPO:** Any git repository with a `Dockerfile` to clone and build, example: `git@github.com:username/repo.git`
+**GIT_REF:** branch name or git commit hash to use, defaults to `master` branch
 **IMAGE_TAG:** The docker tag used to push the image to a registry, example: `<username>/<repo>:<tag>`
 
 Requires running as a `privileged` container, no `docker.sock` is necessary.

@@ -13,7 +13,11 @@ abort('dockerd failure') unless dockerd.start
 
 repo = GitRepo.environment!
 repo.ssh_key = SshKey.environment
-repo.clone!(to: REPO_DIR)
+clone = repo.clone!(to: REPO_DIR)
+
+git_ref = ENV['GIT_REF']
+git_ref ||= 'master'
+clone.checkout!(ref: git_ref)
 
 tag = DockerTag.environment!
 tag.registry_credentials = DockerCredentials.environment

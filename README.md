@@ -48,5 +48,10 @@ Use the environment variables `DOCKER_USER` and `DOCKER_PASS`.
 docker run --privileged --name test-git-builder -e "DOCKER_USER=?" -e "DOCKER_PASS=?" -e "SSH_KEY=`deploy_key.key.base64`" -e "GIT_REPO=git@github.com:username/repo.git" -e "IMAGE_TAG=docker-username/docker-repo:docker-repo-tag" bithavoc/git-builder
 ```
 
+## Without Docker-in-Docker
+
+By default it uses Docker-in-Docker, however, docker sock can also be used by changing `DOCKERD_MODE=sock`.
+This option requires mounting `/var/run/docker.sock` as in "docker run ... -v /var/run/docker.sock:/var/run/docker.sock".
+
 ## License
 MIT

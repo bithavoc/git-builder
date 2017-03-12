@@ -9,5 +9,8 @@ registry:
 test:
 	-docker stop test-builder-job
 	-docker rm test-builder-job
+	-docker stop test-builder-job-checkdockerd-sock
+	-docker rm test-builder-job-checkdockerd-sock
 	docker build -t bithavoc/git-builder:latest .
+	docker run --privileged --network=hola --name test-builder-job-checkdockerd-sock -e "DOCKER_USER=testuser" -e "DOCKER_PASS=testpass" -e "DOCKER_ENDPOINT=myregistrydomain.com:5000" -e "SSH_KEY=$(shell cat test/fixtures/deploy_key.key.base64)" -e "GIT_REPO=git@github.com:bithavoc/git-builder-private-hello.git" -e "IMAGE_TAG=myregistrydomain.com:5000/git-builder-private-hello:latest" -e "DOCKERD_MODE=sock" -e "ONLY_CHECK_DOCKERD=1" -v /var/run/docker.sock:/var/run/docker.sock bithavoc/git-builder:latest
 	docker run --privileged --network=hola --name test-builder-job -e "DOCKER_USER=testuser" -e "DOCKER_PASS=testpass" -e "DOCKER_ENDPOINT=myregistrydomain.com:5000" -e "SSH_KEY=$(shell cat test/fixtures/deploy_key.key.base64)" -e "GIT_REPO=git@github.com:bithavoc/git-builder-private-hello.git" -e "IMAGE_TAG=myregistrydomain.com:5000/git-builder-private-hello:latest" bithavoc/git-builder:latest

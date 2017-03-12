@@ -1,19 +1,20 @@
+require_relative 'dockerd'
 require 'thread'
 
-class DockerdProcess
+class DockerdDind < Dockerd
   def initialize
     @mutex = Mutex.new
   end
 
-  def start(wait_seconds: 60)
+  def check(wait_seconds: 60)
     puts 'Waiting for dockerd...'
-    @dockerd_thread = Thread.new(&method(:boot_dockerd))
+    @dockerd_thread = Thread.new(&method(:boot))
     wait(seconds: wait_seconds)
   end
 
   private
 
-  def boot_dockerd
+  def boot
     success, output = IO.popen(['dockerd', '--insecure-registry', 'myregistrydomain.com:5000', '--experimental', err: [:child, :out]]) do |io|
       output = io.read
       io.close
@@ -36,24 +37,6 @@ class DockerdProcess
   def booting_stopped=(flag)
     @mutex.synchronize do
       @booting_stopped = flag
-    end
-  end
-
-  def wait(seconds:)
-    n = 0
-    while !booting_stopped? && n < seconds
-      return true if is_dockerd_running?
-      sleep 1
-      n += 1
-    end
-    false
-  end
-
-  def is_dockerd_running?
-    IO.popen(['docker', 'ps', err: [:child, :out]]) do |io|
-      io.read
-      io.close
-      $?.success?
     end
   end
 end
